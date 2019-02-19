@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import City from './components/City'
+import FavoriteCities from './components/FavoritedCities'
+import weatherService from './services/weather'
+import SearchForm from './components/SearchForm';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      search: '', // current value in the search form
-      city: { name: 'Helsinki', temperature: 21 },  // current city that is displayed
+      search: '',   // current value in the search form
+      city: null,   // current city that is displayed
+      favorites: [] // cities that have been added to favorites
     }
   }
 
@@ -18,19 +22,47 @@ class App extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('Searched for', this.state.search)
+    try {
+      const cityData = await weatherService.getCurrentTemp(this.state.search)
+      this.setState({
+        search: '',
+        city: cityData
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  getFavoriteTemp = (city) => async () => {
+    try {
+      const cityData = await weatherService.getCurrentTemp(city)
+      this.setState({
+        city: cityData
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  } 
+
+  addFavorite = (cityName) => () => {
+    if (!this.state.favorites.includes(cityName)){
+      this.setState({
+        favorites: this.state.favorites.concat(cityName)
+      })
+    }
   }
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Sää</h1>
-          Etsi kaupunki:
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" value={this.state.search} onChange={this.handleChange}/>
-            <input type="submit" value="Etsi" />
-          </form>
-          <City city={this.state.city} />
+          <SearchForm 
+            search={this.state.search}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+          <City city={this.state.city} favorite={this.addFavorite}/>
+          <FavoriteCities favorites={this.state.favorites} getCurrentTemp={this.getFavoriteTemp}/>
       </div>
     );
   }
