@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import City from './components/City'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      search: '', // current value in the search form
+      city: { name: 'Helsinki', temperature: 21 },  // current city that is displayed
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      search: event.target.value
+    })
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault()
+    console.log('Searched for', this.state.search)
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h1>Sää</h1>
+          Etsi kaupunki:
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.search} onChange={this.handleChange}/>
+            <input type="submit" value="Etsi" />
+          </form>
+          <City city={this.state.city} />
       </div>
     );
   }
