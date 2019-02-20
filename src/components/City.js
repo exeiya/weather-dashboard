@@ -6,7 +6,7 @@ const City = ({city, favorite}) => {
     'padding': 5,
     'margin': 10,
     'textAlign': 'Center',
-    'border': '3px solid #006a79'
+    'border': '3px solid #007979'
   }
 
   if (!city) {

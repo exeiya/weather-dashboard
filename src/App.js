@@ -55,14 +55,18 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Sää</h1>
-          <SearchForm 
-            search={this.state.search}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
-          <City city={this.state.city} favorite={this.addFavorite}/>
-          <FavoriteCities favorites={this.state.favorites} getCurrentTemp={this.getFavoriteTemp}/>
+        <div className="header-box">
+          <h1>Sää</h1>
+        </div>
+        <div className="content">
+        <SearchForm 
+          search={this.state.search}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+        <City city={this.state.city} favorite={this.addFavorite}/>
+        <FavoriteCities favorites={this.state.favorites} getCurrentTemp={this.getFavoriteTemp}/>
+        </div>
       </div>
     );
   }
