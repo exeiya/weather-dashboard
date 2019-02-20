@@ -11,7 +11,7 @@ const City = ({city, favorite}) => {
 
   if (!city) {
     return (
-      <div style={{'width': 250, 'margin': 20}}>
+      <div className="helperContent" style={{'width': 250, 'margin': 20}}>
         <i>Hae kaupungin sää kirjoittamalla kaupungin nimi lomakkeeseen ja paina "Hae".
         Vaihtoehtoisesti voit valita jo tallennetun sijainnin klikkaamalla sitä. </i>
       </div>
@@ -19,11 +19,11 @@ const City = ({city, favorite}) => {
   }
 
   return (
-    <div style={cityStyle}>
+    <div className="cityContent" style={cityStyle}>
       Sää nyt kaupungissa
       <h2>{city.name}</h2>
       <h2> {city.temperature} &deg;C</h2>
-      <button onClick={favorite(city.name)}>Lisää suosikkeihin</button>
+      <button className="favoriteCity" onClick={favorite(city.name)}>Lisää suosikkeihin</button>
     </div>
   )
 }
